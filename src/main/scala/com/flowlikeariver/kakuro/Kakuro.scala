@@ -40,9 +40,6 @@ object Kakuro {
   def allDifferent(nums: List[Int]): Boolean = (nums.size == nums.toSet.size)
 
   def permute(vs: List[Cell], target: Int, soFar: List[Int]): List[List[Int]] = {
-    println(vs.map(x => draw(x)).mkString(""))
-    println(target)
-    println(soFar.map(x => "%d".format(x)).mkString(""))
     if (target >= 1) {
       if (soFar.size == (vs.size - 1)) {
         List(soFar ++ List(target))
@@ -64,21 +61,43 @@ object Kakuro {
     case _             => false
   }
 
-  def transpose(matrix: List[List[Cell]]): List[List[Cell]] =
-    matrix match {
-      case row :: rows =>
-        row match {
-          case col :: cols =>
-            // Take first elements from all rows of the matrix
-            val first = matrix.map(x => x.head)
-            // Take remaining elements from all rows of the matrix
-            // and then transpose the resulting matrix
-            val rest = transpose(matrix.map(x => x.tail))
-            first :: rest
-          case _ => List()
-        }
-      case _ => List()
-    }
+  def transpose[T](matrix: List[List[T]]): List[List[T]] = matrix match {
+    case row :: rows =>
+      row match {
+        case col :: cols =>
+          val first = matrix.map(x => x.head)
+          val rest = transpose(matrix.map(x => x.tail))
+          first :: rest
+        case _ => List()
+      }
+    case _ => List()
+  }
+
+  def solveStep(cells: List[Cell], total: Int) = {
+    val last = cells.length - 1
+    transpose(permuteAll(cells, total)
+              .filter(p => isPossible(cells(last), p(last)))
+              .filter(p => allDifferent(p)))
+    .map(p => Value(p.toSet))
+  }
+
+  def rowTarget(cell: Cell) = cell match {
+    case Across(n)        => n
+    case DownAcross(_, a) => a
+    case _                => 0
+  }
+
+  def colTarget(cell: Cell) = cell match {
+    case Down(d)          => d
+    case DownAcross(d, _) => d
+    case _                => 0
+  }
+
+  def solvePair(f: Cell => Int, pair: List[List[Cell]]) = pair match {
+    case nvs :: nil => nvs
+    case nvs :: vs :: _ => (nvs ++ solveStep(vs, f(nvs.last)))
+    case _ => List()
+  }
 
   def main(args: Array[String]) {
     println("Hello, world!")
