@@ -33,6 +33,11 @@ class TestKakuro extends UnitSpec {
   "A 1 value cell" should "draw" in {
     assert("     1    " == draw(v(Set(1))))
   }
+  
+  "A grid" should "draw" in {
+    val g = List(List(e, dd(4), dd(22), e, dd(16), dd(3)))
+    assert("\n   -----      4\\--     22\\--     -----     16\\--      3\\--  \n" == drawGrid(g))
+  }
 }
 
 }

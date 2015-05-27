@@ -23,13 +23,20 @@ object Kakuro {
     case Down(n)          => "   %2d\\--  ".format(n)
     case Across(n)        => "   --\\%2d  ".format(n)
     case DownAcross(d, a) => "   %2d\\%2d  ".format(d, a)
-    case Value(vs)        => if (1 == vs.size) {
-      vs.map(x => "     " + "%d".format(x) + "    ").mkString("")
-    }
-    else {
-      " " +  List(1, 2, 3, 4, 5, 6, 7, 8, 9).map(x => if (vs(x)) "%d".format(x) else ".").mkString("")
-    }
+    case Value(vs)        =>
+      if (1 == vs.size) {
+        vs.map(x => "     " + "%d".format(x) + "    ").mkString("")
+      }
+      else {
+        " " +  List(1, 2, 3, 4, 5, 6, 7, 8, 9).map(x => if (vs(x)) "%d".format(x) else ".").mkString("")
+      }
   }
+
+  def drawRow(row: List[Cell]) = row.map(c => draw(c)).mkString("") + "\n"
+
+  def drawGrid(grid: List[List[Cell]]) = "\n" + grid.map(r => drawRow(r)).mkString("")
+  
+  val grid1 = List(List(e, dd(4), dd(22), e, dd(16), dd(3)))
 
   def main(args: Array[String]) {
     println("Hello, world!")
