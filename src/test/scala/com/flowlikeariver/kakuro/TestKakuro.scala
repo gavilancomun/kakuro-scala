@@ -47,6 +47,10 @@ class TestKakuro extends UnitSpec {
     "permute" should "permute" in {
       assert(List(List(1, 5), List(5, 1), List(3, 3), List(2, 4), List(4, 2)).toSet == permuteAll(List(v(), v()), 6).toSet)
     }
+    
+    "matrix" should "transpose" in {
+      assert(List(List(e, e), List(aa(1), aa(2))) == transpose(List(List(e, aa(1)), List(e, aa(2)))))
+    }
 }
 
 }

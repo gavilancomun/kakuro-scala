@@ -23,44 +23,62 @@ object Kakuro {
     case Down(n)          => "   %2d\\--  ".format(n)
     case Across(n)        => "   --\\%2d  ".format(n)
     case DownAcross(d, a) => "   %2d\\%2d  ".format(d, a)
-    case Value(vs)        =>
+    case Value(vs) =>
       if (1 == vs.size) {
         vs.map(x => "     " + "%d".format(x) + "    ").mkString("")
-      }
-      else {
-        " " +  List(1, 2, 3, 4, 5, 6, 7, 8, 9).map(x => if (vs(x)) "%d".format(x) else ".").mkString("")
+      } else {
+        " " + List(1, 2, 3, 4, 5, 6, 7, 8, 9).map(x => if (vs(x)) "%d".format(x) else ".").mkString("")
       }
   }
 
   def drawRow(row: List[Cell]) = row.map(c => draw(c)).mkString("") + "\n"
 
   def drawGrid(grid: List[List[Cell]]) = "\n" + grid.map(r => drawRow(r)).mkString("")
-  
+
   val grid1 = List(List(e, dd(4), dd(22), e, dd(16), dd(3)))
-  
-  def allDifferent(nums : List[Int]): Boolean = (nums.size == nums.toSet.size)
-  
-  def permute(vs : List[Cell], target: Int, soFar: List[Int]): List[List[Int]] = { 
+
+  def allDifferent(nums: List[Int]): Boolean = (nums.size == nums.toSet.size)
+
+  def permute(vs: List[Cell], target: Int, soFar: List[Int]): List[List[Int]] = {
     println(vs.map(x => draw(x)).mkString(""))
     println(target)
     println(soFar.map(x => "%d".format(x)).mkString(""))
     if (target >= 1) {
       if (soFar.size == (vs.size - 1)) {
         List(soFar ++ List(target))
-      }
-      else {
+      } else {
         vs(soFar.size) match {
           case Value(vset) => vset.toList.flatMap(v => permute(vs, (target - v), soFar ++ List(v)))
-          case _ => List()
+          case _           => List()
         }
       }
-    }
-    else {
+    } else {
       List()
     }
   }
-  
+
   def permuteAll(vs: List[Cell], total: Int): List[List[Int]] = permute(vs, total, List())
+
+  def isPossible(cell: Cell, n: Int) = cell match {
+    case Value(values) => values(n)
+    case _             => false
+  }
+
+  def transpose(matrix: List[List[Cell]]): List[List[Cell]] =
+    matrix match {
+      case row :: rows =>
+        row match {
+          case col :: cols =>
+            // Take first elements from all rows of the matrix
+            val first = matrix.map(x => x.head)
+            // Take remaining elements from all rows of the matrix
+            // and then transpose the resulting matrix
+            val rest = transpose(matrix.map(x => x.tail))
+            first :: rest
+          case _ => List()
+        }
+      case _ => List()
+    }
 
   def main(args: Array[String]) {
     println("Hello, world!")
