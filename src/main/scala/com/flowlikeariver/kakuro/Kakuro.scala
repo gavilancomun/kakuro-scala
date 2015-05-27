@@ -76,28 +76,32 @@ object Kakuro {
   def solveStep(cells: List[Cell], total: Int) = {
     val last = cells.length - 1
     transpose(permuteAll(cells, total)
-              .filter(p => isPossible(cells(last), p(last)))
-              .filter(p => allDifferent(p)))
-    .map(p => Value(p.toSet))
+      .filter(p => isPossible(cells(last), p(last)))
+      .filter(p => allDifferent(p)))
+      .map(p => Value(p.toSet))
   }
 
-  def rowTarget(cell: Cell) = cell match {
+  val rowTarget = (cell: Cell) => cell match {
     case Across(n)        => n
     case DownAcross(_, a) => a
     case _                => 0
   }
 
-  def colTarget(cell: Cell) = cell match {
+  val colTarget = (cell: Cell) => cell match {
     case Down(d)          => d
     case DownAcross(d, _) => d
     case _                => 0
   }
 
   def solvePair(f: Cell => Int, pair: List[List[Cell]]) = pair match {
-    case nvs :: nil => nvs
+    case nvs :: nil     => nvs
     case nvs :: vs :: _ => (nvs ++ solveStep(vs, f(nvs.last)))
-    case _ => List()
+    case _              => List()
   }
+
+  def solvePairRow(pair: List[List[Cell]]) = solvePair(rowTarget, pair)
+
+  def solvePairCol(pair: List[List[Cell]]) = solvePair(colTarget, pair)
 
   def main(args: Array[String]) {
     println("Hello, world!")
