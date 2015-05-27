@@ -38,7 +38,29 @@ object Kakuro {
   
   val grid1 = List(List(e, dd(4), dd(22), e, dd(16), dd(3)))
   
-  def allDifferent(nums : List[Int]) = (nums.size == (Set() ++ nums).size)
+  def allDifferent(nums : List[Int]): Boolean = (nums.size == nums.toSet.size)
+  
+  def permute(vs : List[Cell], target: Int, soFar: List[Int]): List[List[Int]] = { 
+    println(vs.map(x => draw(x)).mkString(""))
+    println(target)
+    println(soFar.map(x => "%d".format(x)).mkString(""))
+    if (target >= 1) {
+      if (soFar.size == (vs.size - 1)) {
+        List(soFar ++ List(target))
+      }
+      else {
+        vs(soFar.size) match {
+          case Value(vset) => vset.toList.flatMap(v => permute(vs, (target - v), soFar ++ List(v)))
+          case _ => List()
+        }
+      }
+    }
+    else {
+      List()
+    }
+  }
+  
+  def permuteAll(vs: List[Cell], total: Int): List[List[Int]] = permute(vs, total, List())
 
   def main(args: Array[String]) {
     println("Hello, world!")

@@ -43,6 +43,10 @@ class TestKakuro extends UnitSpec {
      assert(true == allDifferent(List(1, 2, 3)))
      assert(false == allDifferent(List(1, 1, 2, 3)))
    }
+   
+    "permute" should "permute" in {
+      assert(List(List(1, 5), List(5, 1), List(3, 3), List(2, 4), List(4, 2)).toSet == permuteAll(List(v(), v()), 6).toSet)
+    }
 }
 
 }
