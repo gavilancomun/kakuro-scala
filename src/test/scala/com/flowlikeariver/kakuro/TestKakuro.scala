@@ -39,6 +39,10 @@ class TestKakuro extends UnitSpec {
     assert("\n   -----      4\\--     22\\--     -----     16\\--      3\\--  \n   -----      4\\--     22\\--     -----     16\\--      3\\--  \n" == drawGrid(g))
   }
   
+  "a full grid" should "draw" in {
+    println(drawGrid(grid1))
+  }
+  
    "all different" should "result" in {
      assert(true == allDifferent(List(1, 2, 3)))
      assert(false == allDifferent(List(1, 1, 2, 3)))
