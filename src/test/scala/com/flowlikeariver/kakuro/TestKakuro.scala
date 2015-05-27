@@ -35,8 +35,8 @@ class TestKakuro extends UnitSpec {
   }
   
   "A grid" should "draw" in {
-    val g = List(List(e, dd(4), dd(22), e, dd(16), dd(3)))
-    assert("\n   -----      4\\--     22\\--     -----     16\\--      3\\--  \n" == drawGrid(g))
+    val g = List(List(e, dd(4), dd(22), e, dd(16), dd(3)), List(e, dd(4), dd(22), e, dd(16), dd(3)))
+    assert("\n   -----      4\\--     22\\--     -----     16\\--      3\\--  \n   -----      4\\--     22\\--     -----     16\\--      3\\--  \n" == drawGrid(g))
   }
 }
 
