@@ -37,6 +37,8 @@ object Kakuro {
   def drawGrid(grid: List[List[Cell]]) = "\n" + grid.map(r => drawRow(r)).mkString("")
   
   val grid1 = List(List(e, dd(4), dd(22), e, dd(16), dd(3)))
+  
+  def allDifferent(nums : List[Int]) = (nums.size == (Set() ++ nums).size)
 
   def main(args: Array[String]) {
     println("Hello, world!")
