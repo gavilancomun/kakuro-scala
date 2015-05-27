@@ -103,6 +103,23 @@ object Kakuro {
 
   def solvePairCol(pair: List[List[Cell]]) = solvePair(colTarget, pair)
 
+  def partitionBy[T](f: T => Boolean, coll: List[T]): List[List[T]] = coll match {
+    case x :: xs =>
+      val fx = f(x)
+      val run = coll.takeWhile(y => fx == f(y))
+      run :: partitionBy(f, coll.drop(run.length))
+    case _ => List()
+  }
+
+  def partitionAll[T](n: Int, step: Int, coll: List[T]): List[List[T]] = coll match {
+    case x :: xs =>
+      val seg = coll.take(n)
+      seg :: partitionAll(n, step, coll.drop(step))
+    case _ => List()
+  }
+  
+  def partitionN[T](n: Int, coll: List[T]) = partitionAll(n, n, coll)
+
   def main(args: Array[String]) {
     println("Hello, world!")
   }

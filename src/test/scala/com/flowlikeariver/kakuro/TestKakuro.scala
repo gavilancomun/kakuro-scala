@@ -51,6 +51,14 @@ class TestKakuro extends UnitSpec {
     "matrix" should "transpose" in {
       assert(List(List(e, e), List(aa(1), aa(2))) == transpose(List(List(e, aa(1)), List(e, aa(2)))))
     }
+    
+    "partBy" should "partBy" in {
+      assert(List(List(1, 2), List(3, 4, 5)) == partitionBy[Int](x => x < 3, List(1,2,3,4,5)))
+    }
+    
+    "partN" should "part" in {
+      assert(List(List(1, 2), List(3)) == partitionN(2, List(1, 2, 3)))
+    }
 }
 
 }
