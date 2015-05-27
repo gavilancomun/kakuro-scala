@@ -11,7 +11,7 @@ case class Value(values: Set[Int]) extends Cell
 
 object Kakuro {
 
-  def e = Empty()
+  def e() = Empty()
   def d(down: Int) = Down(down)
   def a(across: Int) = Across(across)
   def da(down: Int, across: Int) = DownAcross(down, across)
