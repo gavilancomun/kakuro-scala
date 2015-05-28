@@ -63,6 +63,13 @@ class TestKakuro extends UnitSpec {
     "partN" should "part" in {
       assert(List(List(1, 2), List(3)) == partitionN(2, List(1, 2, 3)))
     }
+    
+    "solver" should "solve" in {
+      val expected = "     3         9    \n";
+      val solved = solver(grid1)
+      val drawSolved = drawGrid(solved)
+      assert(expected == drawSolved.substring(drawSolved.length - expected.length))
+    }
 }
 
 }

@@ -74,9 +74,9 @@ object Kakuro {
   def solveStep(cells: List[Cell], total: Int) = {
     val last = cells.length - 1
     transpose(permuteAll(cells, total)
-      .filter(p => isPossible(cells(last), p(last)))
-      .filter(p => allDifferent(p)))
-      .map(p => Value(p.toSet))
+              .filter(p => isPossible(cells(last), p(last)))
+              .filter(p => allDifferent(p)))
+    .map(p => Value(p.toSet))
   }
 
   val rowTarget = (cell: Cell) => cell match {
@@ -130,6 +130,17 @@ object Kakuro {
   val solveCol = (cells: List[Cell]) => solveLine(solvePairCol, cells)
 
   def solveGrid(grid: List[List[Cell]]) = transpose(transpose(grid.map(solveRow)).map(solveCol))
+
+  def solver(grid: List[List[Cell]]): List[List[Cell]] = {
+    val g = solveGrid(grid)
+    if (g == grid) {
+      grid
+    }
+    else {
+      println(drawGrid(g))
+      solver(g)
+    }
+  }
 
   val grid1 = List(
     List(e, dd(4), dd(22), e, dd(16), dd(3)),
