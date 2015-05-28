@@ -18,7 +18,7 @@ object Kakuro {
   def v() = Value(Set(1, 2, 3, 4, 5, 6, 7, 8, 9))
   def v(values: Set[Int]) = Value(values)
 
-  def draw(cell: Cell): String = cell match {
+  def draw(cell: Cell) = cell match {
     case Empty()          => "   -----  "
     case Down(n)          => "   %2d\\--  ".format(n)
     case Across(n)        => "   --\\%2d  ".format(n)
