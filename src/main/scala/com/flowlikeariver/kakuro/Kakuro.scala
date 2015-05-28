@@ -25,9 +25,10 @@ object Kakuro {
     case DownAcross(d, a) => "   %2d\\%2d  ".format(d, a)
     case Value(vs) =>
       if (1 == vs.size) {
-        vs.map(x => "     " + "%d".format(x) + "    ").mkString("")
-      } else {
-        " " + List(1, 2, 3, 4, 5, 6, 7, 8, 9).map(x => if (vs(x)) "%d".format(x) else ".").mkString("")
+        vs.map(x => "     " + x + "    ").mkString("")
+      }
+      else {
+        " " + List(1, 2, 3, 4, 5, 6, 7, 8, 9).map(x => if (vs(x)) x.toString else ".").mkString("")
       }
   }
 
@@ -41,13 +42,15 @@ object Kakuro {
     if (target >= 1) {
       if (soFar.size == (vs.size - 1)) {
         List(soFar ++ List(target))
-      } else {
+      }
+      else {
         vs(soFar.size) match {
           case Value(vset) => vset.toList.flatMap(v => permute(vs, (target - v), soFar ++ List(v)))
           case _           => List()
         }
       }
-    } else {
+    }
+    else {
       List()
     }
   }
@@ -133,7 +136,8 @@ object Kakuro {
     val g = solveGrid(grid)
     if (g == grid) {
       grid
-    } else {
+    }
+    else {
       println(drawGrid(g))
       solver(g)
     }
