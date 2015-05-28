@@ -35,7 +35,7 @@ object Kakuro {
 
   def drawGrid(grid: List[List[Cell]]) = "\n" + grid.map(r => drawRow(r)).mkString("")
 
-  def allDifferent(nums: List[Int]): Boolean = (nums.size == nums.toSet.size)
+  def allDifferent(nums: List[Int]) = (nums.size == nums.toSet.size)
 
   def permute(vs: List[Cell], target: Int, soFar: List[Int]): List[List[Int]] = {
     if (target >= 1) {
